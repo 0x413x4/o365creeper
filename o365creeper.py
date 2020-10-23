@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 # Created by Korey McKinley, Senior Security Consulant at LMG Security
 # https://lmgsecurity.com
@@ -14,6 +14,9 @@
 # may produce false positives. This tool is best ran after you've gathered
 # as many email addresses as possible through OSINT in a list with the
 # -f argument.
+#
+# October 23, 2020 - "ported" to python3
+# i.e added parenthesis to print statement
 
 import requests as req
 import argparse
@@ -42,14 +45,14 @@ def main():
                 valid = re.search('"IfExistsResult":0,', response)
                 invalid = re.search('"IfExistsResult":1,', response)
                 if invalid:
-                    print '%s - INVALID' % email
+                    print('%s - INVALID' % email)
                 if valid and args.output is not None:
-                    print '%s - VALID' % email
+                    print('%s - VALID' % email)
                     with open(args.output, 'a+') as output_file: 
                         output_file.write(email+'\n')
                 else:
                     if valid:
-                        print '%s - VALID' % email
+                        print('%s - VALID' % email)
 
     elif args.email is not None:
         email = args.email
@@ -59,13 +62,13 @@ def main():
         valid = re.search('"IfExistsResult":0', response)
         invalid = re.search('"IfExistsResult":1', response)
         if invalid:
-            print '%s - INVALID' % email
+            print('%s - INVALID' % email)
         if valid and args.output is not None:
-            print '%s - VALID' % email
+            print('%s - VALID' % email)
             with open(args.output, 'w') as output_file:
                 output_file.write(email+'\n')
         else:
             if valid:
-                print '%s - VALID' % email
+                print('%s - VALID' % email)
 if __name__ == "__main__":
     main()
